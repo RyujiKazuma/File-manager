@@ -19,11 +19,11 @@ namespace ConsoleApp2
 
         static char options()
         {
-            Console.WriteLine("Vítej v programu xxx. Zvol si jednu z možností.");
-            Console.WriteLine("1. zobrazit soubory"); //seznam souborů ve složce, naformátovaná tabulka > 
-            Console.WriteLine("2. smazat soubory ve složce");     //možnosti zda všechy (pokud ano tak plná cesta), poud ne tak obsah
-            Console.WriteLine("3. vytvoření složky");
-
+            Console.WriteLine("Welcome in File-manager. Please select an option.");
+            Console.WriteLine("1. See the files");  //naformátovat tabulku
+            Console.WriteLine("2. Delete all files in directory");    
+            Console.WriteLine("3. Create directory");
+                                
             ConsoleKeyInfo moznost = Console.ReadKey();
             char option = moznost.KeyChar;
 
@@ -32,7 +32,8 @@ namespace ConsoleApp2
 
         static string cesta()
         {
-            Console.WriteLine("Zadej cestu: ");
+            Console.WriteLine("");
+            Console.WriteLine("Write down path to dir.");
             string cestaD = Console.ReadLine();
 
             return cestaD;
@@ -42,14 +43,15 @@ namespace ConsoleApp2
         {
             if(option == '1')
             {
-                Console.WriteLine("Zvolte si další možnost");
-                Console.WriteLine("1. vypsat všechny soubory i s cestou");
-                Console.WriteLine("2. vypsat pouze názvy souborů");
+                Console.WriteLine("Choose another option");
+                Console.WriteLine("1. show files with path");
+                Console.WriteLine("2. show just name and type of files");
                 ConsoleKeyInfo moznost = Console.ReadKey();
                 char podOption = moznost.KeyChar;
 
                 if(podOption == '1')
-                {
+                { 
+                    Console.WriteLine("");
                     string[] files = Directory.GetFiles(cesta);
                     foreach (string jmena in files)
                     {
@@ -59,37 +61,46 @@ namespace ConsoleApp2
                 }
                 else if(podOption == '2')
                 {
+                    Console.WriteLine("");
 
                     string[] files = Directory.GetFiles(cesta);
 
                     foreach (string jmena in files)
                     {
-                        Console.WriteLine(Path.GetFileName(files));
+
+                       Console.WriteLine(Path.GetFileName(jmena));
                     }
                     Console.ReadLine();
                 }
                 else
                 {
-
+                    Console.WriteLine("You have entered not valid value.");
 
                 }
 
             }
             else if(option == '2')
-            {
-                
+            { 
 
+                string[] files = Directory.GetFiles(cesta);
+                foreach (string jmena in files)
+                {
+                    File.Delete(jmena);
+                }
+                Console.WriteLine("");
+                Console.WriteLine("All Files in cesta was deleted");
+                Console.ReadLine();
 
             }
             else if(option == '3')
             {
-                Console.WriteLine("Zadej název pro složku");
+                Console.WriteLine("Name the dir");
                 string jmenoDir = Console.ReadLine();
                 Directory.CreateDirectory(cesta + @"\" + jmenoDir);
             }
             else
             {
-                Console.WriteLine("Zadal jsi neplatnou hodnotu");
+                Console.WriteLine("You have entered unvalid value.");
                 
             }
 
